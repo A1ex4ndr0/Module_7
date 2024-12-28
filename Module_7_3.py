@@ -5,9 +5,10 @@ class WordsFinder:
     def get_all_words(self):
         all_words = {}
         punc = [',', '.', '=', '!', '?', ';', ':', ' - ']
-        _list = []
+
         for i in self.file_names:
             with open(i, encoding='utf-8') as file:
+                _list = []
                 for line in file:
                     line = line.lower()
                     for symb in line:
@@ -17,19 +18,12 @@ class WordsFinder:
                     for j in words:
                         _list.append(j)
             all_words[i] = _list
-            _list = []
         return all_words
 
     def find(self, word):
         _dict = {}
         for name, words in self.get_all_words().items():
-            _count = 0
-            for i in words:
-                #if i in name:
-                _count += 1
-                if word.lower() == i.lower():
-                    break
-            _dict[name] = _count
+            _dict[name] = [s.lower() for s in words].index(word.lower()) + 1
         return _dict
 
     def count(self, word):
@@ -52,12 +46,12 @@ print(finder2.count('teXT')) # 4 слова teXT в тексте всего
 # print(finder1.find('captain'))
 # print(finder1.count('captain'))
 
-# finder1 = WordsFinder('Rudyard Kipling - If.txt',)
+# finder1 = WordsFinder('Rudyard Kipling - If.txt')
 # print(finder1.get_all_words())
 # print(finder1.find('if'))
 # print(finder1.count('if'))
 
-# finder1 = WordsFinder('Mother Goose - Monday’s Child.txt',)
+# finder1 = WordsFinder('Mother Goose - Monday’s Child.txt')
 # print(finder1.get_all_words())
 # print(finder1.find('Child'))
 # print(finder1.count('Child'))
